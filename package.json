@@ -1,0 +1,24 @@
+{
+  "name": "UserApiWithTests",
+  "version": "0.0.1",
+  "description": "Creating a simple CRUD API starting from tests",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --harmony app.js",
+    "test": "./node_modules/mocha/bin/mocha --harmony-generators test.js -u bdd -R spec"
+  },
+  "author": "Marcus Hammarberg",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "supertest": "~0.12.1",
+    "co": "~3.0.6"
+  },
+  "dependencies": {
+    "koa": "~0.6.1",
+    "koa-route": "~1.1.4",
+    "co-monk": "~1.0.0",
+    "co-body": "0.0.1",
+    "monk": "~0.9.0"
+  }
+}
