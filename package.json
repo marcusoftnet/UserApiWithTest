@@ -1,6 +1,7 @@
 {
   "name": "UserApiWithTests",
   "version": "0.0.1",
+  "repository" : "https://github.com/marcusoftnet/UserApiWithTest",
   "description": "Creating a simple CRUD API starting from tests",
   "main": "app.js",
   "scripts": {
