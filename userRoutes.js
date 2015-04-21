@@ -9,6 +9,18 @@ module.exports.users = users;
 module.exports.add = function * () {
 	var postedUser = yield parse(this);
 
+	if(!exists(postedUser.name)){
+		this.set('ValidationError', 'Name is required');
+		this.status = 200;
+		return;
+	};
+
+	if(!exists(postedUser.city)){
+		this.set('ValidationError', 'City is required');
+		this.status = 200;
+		return;
+	};
+
 	var insertedUser = yield users.insert(postedUser);
 
 	this.set("location", "/user/" + insertedUser._id);
@@ -33,4 +45,12 @@ module.exports.update = function * (id) {
 module.exports.remove = function * (id) {
 	yield users.remove({_id : id});
 	this.status = 200;
+};
+
+var exists = function (value) {
+	if(value === undefined)
+		return false;
+	if(value === null)
+		return false;
+	return true;
 };
