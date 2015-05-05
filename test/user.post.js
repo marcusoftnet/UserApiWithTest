@@ -1,3 +1,5 @@
+var co = require("co");
+var should = require("should");
 var helpers = require('./testHelpers.js');
 var users = helpers.users;
 var request = helpers.request;
@@ -21,7 +23,13 @@ describe('POST to /user', function(){
 			.post('/user')
 			.send(test_user)
 			.expect('location', /^\/user\/[0-9a-fA-F]{24}$/) // Mongo Object Id /user/234234523562512512
-			.expect(200, done);
+			.expect(201)
+			.end(function () {
+				co(function *() {
+					var userFromDb = yield users.findOne({ name : test_user.name });
+					userFromDb.name.should.equal("This is not the name you are looking for");
+				}).then(done, done);
+			});				
 	});
 
 	it('returns validation error if name is not present', function(done){

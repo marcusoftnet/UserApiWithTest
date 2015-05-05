@@ -27,6 +27,6 @@ describe('PUT to /user', function(){
 				.send({name: 'Marcus v2', City: 'Bandung Updated'})
 				.expect('location', userUrl)
 				.expect(204, done);
-		})();
+		});
 	});
 });

@@ -24,7 +24,7 @@ module.exports.add = function * () {
 	var insertedUser = yield users.insert(postedUser);
 
 	this.set("location", "/user/" + insertedUser._id);
-	this.status = 200;
+	this.status = 201;
 };
 
 module.exports.get = function *(id) {

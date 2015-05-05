@@ -26,6 +26,6 @@ describe('DEL to /user/:id', function(){
 			request
 				.del(userUrl)
 				.expect(200, done);
-		})();
+		});
 	});
 });

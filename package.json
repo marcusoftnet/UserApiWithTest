@@ -1,7 +1,7 @@
 {
   "name": "UserApiWithTests",
   "version": "0.0.1",
-  "repository" : "https://github.com/marcusoftnet/UserApiWithTest",
+  "repository": "https://github.com/marcusoftnet/UserApiWithTest",
   "description": "Creating a simple CRUD API starting from tests",
   "main": "app.js",
   "scripts": {
@@ -11,15 +11,16 @@
   "author": "Marcus Hammarberg",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "mocha": "~1.18.2",
-    "supertest": "~0.12.1",
-    "co": "~3.0.6"
+    "co": "*",
+    "mocha": "*",
+    "should": "^6.0.1",
+    "supertest": "*"
   },
   "dependencies": {
-    "koa": "~0.6.1",
-    "koa-route": "~1.1.4",
-    "co-monk": "~1.0.0",
-    "co-body": "0.0.1",
-    "monk": "~0.9.0"
+    "co-body": "*",
+    "co-monk": "*",
+    "koa": "*",
+    "koa-route": "*",
+    "monk": "*"
   }
 }

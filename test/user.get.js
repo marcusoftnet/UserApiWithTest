@@ -30,6 +30,6 @@ describe('GET /user/:id ', function(){
 	      		.expect(/Marcus/)
 	      		.expect(/Bandung, Indonesia/)
 	      		.expect(200, done);
-	    })();
+	    });
 	});
 });

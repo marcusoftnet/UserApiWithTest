@@ -10,7 +10,8 @@ module.exports.removeAll = function(done){
 	co(function *(){
 		yield users.remove({});
 		// and other things we need to clean up
-	})(done);
+		done();
+	});
 };
 
 module.exports.test_user  = { name: 'Marcus', city : 'Bandung, Indonesia'};
