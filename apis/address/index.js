@@ -6,12 +6,12 @@ var parse = require("co-body");
 var monk = require("monk");
 var wrap = require("co-monk");
 var db = monk("localhost/addressApi");
-var addresses = wrap(db.get("address"));
+var addresses = wrap(db.get("addresses"));
 module.exports.addresses = addresses;
 
 // routes
 app.use(routes.post("/", add));
-app.use(routes.get("/:id", getAddress));
+app.use(routes.get("/:id", get));
 app.use(routes.put("/:id", update));
 app.use(routes.del("/:id", remove));
 
@@ -20,37 +20,37 @@ app.listen(3000);
 console.log("The app is listening. Port 3000");
 
 
-var add = module.exports.add = function *() {
+function *add() {
 	var postedAddress = yield parse(this);
 
-	if(!exists(postedAddress.user)){
-		this.set('ValidationError', 'User is required');
+	if(!exists(postedAddress.userId)){
+		this.set('ValidationError', 'User ID is required');
 		this.status = 200;
 		return;
 	};
 
 	var insertedAddress = yield addresses.insert(postedAddress);
 
-	this.set("location", "/address/" + insertedAddress._id);
+	this.set("location", "/" + insertedAddress._id);
 	this.status = 201;
 };
 
-var getAddress = module.exports.getAddress = function *(id) {
+function *get(id) {
 	var address = yield addresses.findById(id);
 	this.body = address;
 	this.status = 200;
 };
 
-var update = module.exports.update = function *(id) {
+function *update(id) {
 	var postedAddress = yield parse(this);
 
 	yield addresses.updateById(id, postedAddress);
 
-	this.set("location", "/address/" + id);
+	this.set("location", "/" + id);
 	this.status = 204;
 };
 
-var remove = module.exports.remove = function *(id) {
+function *remove(id) {
 	yield addresses.remove({_id : id});
 	this.status = 200;
 };

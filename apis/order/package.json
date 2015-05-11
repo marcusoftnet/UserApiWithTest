@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --harmony index.js",
-    "test": "./node_modules/mocha/bin/mocha --harmony-generators -u bdd -R spec"
+    "test": "./node_modules/mocha/bin/mocha --harmony-generators -u bdd -R list"
   },
   "author": "Marcus Hammarberg",
   "license": "BSD-2-Clause",

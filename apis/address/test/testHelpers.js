@@ -5,11 +5,9 @@ module.exports.request = require('supertest').agent(app.listen());
 var addresses = app.addresses;
 module.exports.addresses = app.addresses;
 
-module.exports.removeAll = function(done){
-	console.log(app.addresses);
+module.exports.removeAll = function(){
 	co(function *(){
 		yield addresses.remove({});
-		done();
 	});
 };
 
