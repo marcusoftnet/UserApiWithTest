@@ -27,7 +27,8 @@ describe('POST to /user', function(){
 			.end(function () {
 				co(function *() {
 					var userFromDb = yield users.findOne({ name : test_user.name });
-					userFromDb.name.should.equal("This is not the name you are looking for");
+					// userFromDb.name.should.equal("This is not the name you are looking for");
+					userFromDb.name.should.equal(test_user.name);
 				}).then(done, done);
 			});				
 	});

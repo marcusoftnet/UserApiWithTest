@@ -10,17 +10,17 @@
   },
   "author": "Marcus Hammarberg",
   "license": "BSD-2-Clause",
-  "devDependencies": {
-    "co": "*",
-    "mocha": "*",
-    "should": "^6.0.1",
-    "supertest": "*"
-  },
   "dependencies": {
-    "co-body": "*",
-    "co-monk": "*",
-    "koa": "*",
-    "koa-route": "*",
-    "monk": "*"
+    "co-body": "^2.0.0",
+    "co-monk": "^1.0.0",
+    "koa": "^0.20.0",
+    "koa-route": "^2.4.1",
+    "monk": "^1.0.1"
+  },
+  "devDependencies": {
+    "co": "^4.5.4",
+    "mocha": "^2.2.4",
+    "should": "^6.0.1",
+    "supertest": "^0.15.0"
   }
 }
