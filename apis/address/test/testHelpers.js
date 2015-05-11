@@ -1,17 +1,21 @@
 var co = require('co');
 
-var app = require('../app.js');
+var app = require('../');
 module.exports.request = require('supertest').agent(app.listen());
-
-var users = require('../userRoutes.js').users;
-module.exports.users = users;
+var addresses = app.addresses;
+module.exports.addresses = app.addresses;
 
 module.exports.removeAll = function(done){
+	console.log(app.addresses);
 	co(function *(){
-		yield users.remove({});
-		// and other things we need to clean up
+		yield addresses.remove({});
 		done();
 	});
 };
 
-module.exports.test_user  = { name: 'Marcus', city : 'Bandung, Indonesia'};
+module.exports.test_address  = { 
+	userId: 987654321, 
+	street : 'Jalan Jawa No 20', 
+	city : 'Bandung', 
+	country: 'Indonesia'
+};

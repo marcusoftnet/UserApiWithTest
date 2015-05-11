@@ -1,11 +1,11 @@
 {
-  "name": "UserApiWithTests",
-  "version": "0.0.1",
+  "name": "OrderApi",
+  "version": "1.0.0",
   "repository": "https://github.com/marcusoftnet/UserApiWithTest",
-  "description": "Creating a simple CRUD API starting from tests",
-  "main": "app.js",
+  "description": "The order API",
+  "main": "index.js",
   "scripts": {
-    "start": "node --harmony app.js",
+    "start": "node --harmony index.js",
     "test": "./node_modules/mocha/bin/mocha --harmony-generators -u bdd -R spec"
   },
   "author": "Marcus Hammarberg",
@@ -15,6 +15,7 @@
     "co-monk": "^1.0.0",
     "koa": "^0.20.0",
     "koa-route": "^2.4.1",
+    "mongodb": "^2.0.31",
     "monk": "^1.0.1"
   },
   "devDependencies": {

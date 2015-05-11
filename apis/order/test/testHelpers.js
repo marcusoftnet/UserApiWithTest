@@ -1,17 +1,19 @@
 var co = require('co');
 
-var app = require('../app.js');
+var app = require('../');
 module.exports.request = require('supertest').agent(app.listen());
 
-var users = require('../userRoutes.js').users;
-module.exports.users = users;
+var orders = require('../orderRoutes.js').orders;
+module.exports.orders = orders;
 
-module.exports.removeAll = function(done){
+module.exports.removeAll = function(){
 	co(function *(){
-		yield users.remove({});
-		// and other things we need to clean up
-		done();
+		yield orders.remove({});
 	});
 };
 
-module.exports.test_user  = { name: 'Marcus', city : 'Bandung, Indonesia'};
+module.exports.test_order = { 
+	orderId: '123456789', 
+	ordered : new Date("2015-01-01"), 
+	userId : "987654321" 
+};
