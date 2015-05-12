@@ -8,7 +8,6 @@ module.exports.users = users;
 
 module.exports.add = function * () {
 	var postedUser = yield parse(this);
-
 	if(!exists(postedUser.name)){
 		this.set('ValidationError', 'Name is required');
 		this.status = 200;
@@ -23,7 +22,7 @@ module.exports.add = function * () {
 
 	var insertedUser = yield users.insert(postedUser);
 
-	this.set("location", "/user/" + insertedUser._id);
+	this.set("location", this.originalUrl + "/" + insertedUser._id);
 	this.status = 201;
 };
 
@@ -38,7 +37,8 @@ module.exports.update = function * (id) {
 
 	yield users.updateById(id, userFromRequest);
 
-	this.set("location", "/user/" + id);
+	var prefixOfUrl = this.originalUrl.replace(id, "");
+	this.set("location", prefixOfUrl + id);
 	this.status = 204;
 }
 

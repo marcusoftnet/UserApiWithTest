@@ -17,7 +17,7 @@ module.exports.add = function * () {
 
 	var insertedOrder = yield orders.insert(postedOrder);
 
-	this.set("location", "/order/" + insertedOrder.orderId);
+	this.set("location", this.originalUrl + "/" + insertedOrder.orderId);
 	this.status = 201;
 };
 
@@ -38,7 +38,8 @@ module.exports.update = function * (orderId) {
 
 	yield orders.update({ orderId : orderId }, orderFromRequest);
 
-	this.set("location", "/" + orderId);
+	var prefixOfUrl = this.originalUrl.replace(orderId, "");
+	this.set("location", prefixOfUrl + orderId);
 	this.status = 204;
 }
 

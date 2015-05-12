@@ -11,5 +11,4 @@ app.use(routes.del("/:id", orderRoutes.remove));
 app.use(routes.get("/user/:userId", orderRoutes.getForUser));
 
 // Fire it up
-app.listen(3000);
 console.log("The app is listening. Port 3000");

@@ -16,7 +16,9 @@ app.use(routes.put("/:id", update));
 app.use(routes.del("/:id", remove));
 
 // Fire it up
-app.listen(3000);
+if(process.env.standalone){
+	app.listen(3000);
+}
 console.log("The app is listening. Port 3000");
 
 
@@ -31,7 +33,7 @@ function *add() {
 
 	var insertedAddress = yield addresses.insert(postedAddress);
 
-	this.set("location", "/" + insertedAddress._id);
+	this.set("location", this.originalUrl + "/" + insertedAddress._id);
 	this.status = 201;
 };
 
@@ -46,7 +48,8 @@ function *update(id) {
 
 	yield addresses.updateById(id, postedAddress);
 
-	this.set("location", "/" + id);
+	var prefixOfUrl = this.originalUrl.replace(id, "");
+	this.set("location", prefixOfUrl + id);
 	this.status = 204;
 };
 

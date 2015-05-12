@@ -5,7 +5,7 @@
   "description": "The Address API",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony index.js",
+    "start": "node --harmony index.js standalone",
     "test": "./node_modules/mocha/bin/mocha --harmony-generators -u bdd -R dot"
   },
   "author": "Marcus Hammarberg",

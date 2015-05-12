@@ -20,7 +20,7 @@ describe('PUT to /user', function(){
 		co(function *() {
 			// Insert test user in database
 			var user = yield users.insert(test_user);
-			var userUrl = '/user/' + user._id;
+			var userUrl = '/' + user._id;
 
 			request
 				.put(userUrl)

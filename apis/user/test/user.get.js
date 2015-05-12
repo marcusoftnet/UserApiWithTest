@@ -3,7 +3,7 @@ var helpers = require('./testHelpers.js');
 var users = helpers.users;
 var request = helpers.request;
 
-describe('GET /user/:id ', function(){
+describe('GET user /:id ', function(){
 
 	var test_user = {};
 
@@ -20,7 +20,7 @@ describe('GET /user/:id ', function(){
 		co(function *() {
 			// Insert test user in database
 			var user = yield users.insert(test_user);
-			var userUrl = '/user/' + user._id;
+			var userUrl = '/' + user._id;
 
 			// Get
 			request

@@ -20,14 +20,13 @@ describe('POST to /user', function(){
 	it('creates a new user for complete posted data', function(done){
 		// Post
 		request
-			.post('/user')
+			.post('/')
 			.send(test_user)
-			.expect('location', /^\/user\/[0-9a-fA-F]{24}$/) // Mongo Object Id /user/234234523562512512
+			.expect('location', /^\/[0-9a-fA-F]{24}$/) // Mongo Object Id /234234523562512512
 			.expect(201)
 			.end(function () {
 				co(function *() {
 					var userFromDb = yield users.findOne({ name : test_user.name });
-					// userFromDb.name.should.equal("This is not the name you are looking for");
 					userFromDb.name.should.equal(test_user.name);
 				}).then(done, done);
 			});				
@@ -37,7 +36,7 @@ describe('POST to /user', function(){
 		var u = { city : "A city without a user name"};
 
 		request
-			.post('/user')
+			.post('/')
 			.send(u)
 			.expect('ValidationError', "Name is required")
 			.expect(200, done);
@@ -47,7 +46,7 @@ describe('POST to /user', function(){
 		var u = { name : "A name without a city"};
 
 		request
-			.post('/user')
+			.post('/')
 			.send(u)
 			.expect('ValidationError', "City is required")
 			.expect(200, done);
