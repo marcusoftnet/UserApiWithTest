@@ -26,7 +26,7 @@
   "homepage": "https://github.com/marcusoftnet/UserApiWithTest",
   "dependencies": {
     "AddressAPI": "file:apis/address",
-    "OrderApi": "file:apis/order",
+    "OrderAPI": "file:apis/order",
     "UserAPI": "file:apis/user",
     "koa": "^0.20.0",
     "koa-basic-auth": "^1.1.2",
