@@ -27,7 +27,7 @@ module.exports.add = function * () {
 };
 
 module.exports.get = function *(id) {
-	var user = yield users.findById(id);
+	var user = yield users.findOne({_id: id});
 	this.body = user;
 	this.status = 200;
 };
@@ -35,7 +35,7 @@ module.exports.get = function *(id) {
 module.exports.update = function * (id) {
 	var userFromRequest = yield parse(this);
 
-	yield users.updateById(id, userFromRequest);
+	yield users.findOneAndUpdate({_id: id}, userFromRequest);
 
 	var prefixOfUrl = this.originalUrl.replace(id, "");
 	this.set("location", prefixOfUrl + id);
