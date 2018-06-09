@@ -6,7 +6,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node --harmony app.js",
-    "test": "mocha -w -u bdd -R spec"
+    "test": "mocha -w -u bdd -R dot",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "author": "Marcus Hammarberg",
   "license": "BSD-2-Clause",
@@ -21,6 +23,7 @@
     "co": "^4.5.4",
     "mocha": "^2.2.4",
     "should": "^6.0.1",
+    "standard": "^11.0.1",
     "supertest": "^0.15.0"
   }
 }
