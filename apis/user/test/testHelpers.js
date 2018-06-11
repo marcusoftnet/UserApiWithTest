@@ -1,12 +1,11 @@
-var co = require('co')
+const co = require('co')
+const app = require('../app.js')
+const request = require('supertest').agent(app.listen())
+const users = require('../userRoutes.js').users
 
-var app = require('../app.js')
-module.exports.request = require('supertest').agent(app.listen())
+const testUser = { name: 'Marcus', city: 'Bandung, Indonesia' }
 
-var users = require('../userRoutes.js').users
-module.exports.users = users
-
-module.exports.removeAll = function (done) {
+function removeAll (done) {
   co(function * () {
     yield users.remove({})
     // and other things we need to clean up
@@ -14,4 +13,10 @@ module.exports.removeAll = function (done) {
   })
 }
 
-module.exports.test_user = { name: 'Marcus', city: 'Bandung, Indonesia'}
+module.exports = {
+  testUser,
+  app,
+  request,
+  users,
+  removeAll
+}

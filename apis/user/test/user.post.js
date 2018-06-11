@@ -8,7 +8,7 @@ describe('POST to /user', function () {
   var test_user = {}
 
   beforeEach(function (done) {
-    test_user = helpers.test_user
+    test_user = helpers.testUser
     helpers.removeAll(done)
   })
 
