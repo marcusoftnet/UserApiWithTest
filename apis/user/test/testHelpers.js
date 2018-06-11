@@ -5,12 +5,9 @@ const users = require('../userRoutes.js').users
 
 const testUser = { name: 'Marcus', city: 'Bandung, Indonesia' }
 
-function removeAll (done) {
-  co(function * () {
-    yield users.remove({})
-    // and other things we need to clean up
-    done()
-  })
+async function removeAll (done) {
+  await users.remove({})
+  done()
 }
 
 module.exports = {
