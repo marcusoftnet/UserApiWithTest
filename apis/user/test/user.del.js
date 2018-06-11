@@ -1,30 +1,16 @@
-var co = require('co')
-var helpers = require('./testHelpers.js')
-var users = helpers.users
-var request = helpers.request
+/* global describe, beforeEach, afterEach, it */
+const helpers = require('./testHelpers.js')
+const users = helpers.users
+const request = helpers.request
 
-describe('DEL user /:id', function () {
-  var test_user = {}
+describe('DEL user /:id', () => {
+  beforeEach(async () => helpers.removeAll())
+  afterEach(async () => helpers.removeAll())
 
-  beforeEach(function (done) {
-    test_user = helpers.testUser
-    helpers.removeAll(done)
-  })
-
-  afterEach(function (done) {
-    helpers.removeAll(done)
-  })
-
-  it('deletes an existing user', function (done) {
-    co(function * () {
-      // Insert test user in database
-      var user = yield users.insert(test_user)
-      var userUrl = '/' + user._id
-
-      // Delete the user
-      request
-        .del(userUrl)
-        .expect(200, done)
-    })
+  it('deletes an existing user', async () => {
+    const user = await users.insert(helpers.testUser)
+    request
+      .del(`/${user._id}`)
+      .expect(200)
   })
 })

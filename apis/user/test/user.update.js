@@ -1,31 +1,19 @@
-var co = require('co')
-var helpers = require('./testHelpers.js')
-var users = helpers.users
-var request = helpers.request
+/* global describe, beforeEach, afterEach, it */
+const helpers = require('./testHelpers.js')
+const users = helpers.users
+const request = helpers.request
 
-describe('PUT to /user', function () {
-  var test_user = {}
+describe('PUT to /user', () => {
+  beforeEach(async () => helpers.removeAll())
+  afterEach(async () => helpers.removeAll())
 
-  beforeEach(function (done) {
-    test_user = helpers.testUser
-    helpers.removeAll(done)
-  })
-
-  afterEach(function (done) {
-    helpers.removeAll(done)
-  })
-
-  it('updates an existing user for complete put data', function (done) {
-    co(function * () {
-      // Insert test user in database
-      var user = yield users.insert(test_user)
-      var userUrl = '/' + user._id
-
-      request
-        .put(userUrl)
-        .send({name: 'Marcus v2', City: 'Bandung Updated'})
-        .expect('location', userUrl)
-        .expect(204, done)
-    })
+  it('updates an existing user for complete put data', async () => {
+    const user = await users.insert(helpers.testUser)
+    const userUrl = `/${user._id}`
+    request
+      .put(userUrl)
+      .send({name: 'Marcus v2', City: 'Bandung Updated'})
+      .expect('location', userUrl)
+      .expect(204)
   })
 })
