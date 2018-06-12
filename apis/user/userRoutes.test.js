@@ -1,13 +1,22 @@
-/* global describe, beforeEach, afterEach, it */
-const app = require('./app.js')
-const request = require('supertest').agent(app.listen())
+/* global describe, before, beforeEach, after, afterEach, it */
+const app = require('./app.js').app
+const supertest = require('supertest')
 const users = require('./userRoutes.js').users
 const testUser = { name: 'Marcus', city: 'Bandung, Indonesia' }
-const removeAll = async () => users.remove({})
 
 describe('User API', () => {
-  beforeEach(async () => removeAll())
-  afterEach(async () => removeAll())
+  let request
+  let server
+
+  before(() => { server = app.listen(8888) })
+  after(() => { server.close() })
+
+  beforeEach(async () => {
+    await users.remove({})
+    request = supertest(server)
+  })
+
+  const throwIfError = (err, res) => { if (err) throw err }
 
   describe('DEL user /:id', () => {
     it('deletes an existing user', async () => {
@@ -15,10 +24,11 @@ describe('User API', () => {
       request
         .del(`/${user._id}`)
         .expect(200)
+        .end(throwIfError)
     })
   })
 
-  describe('GET user /:id ', function () {
+  describe('GET user /:id ', () => {
     it('returns JSON for existing user', async () => {
       const user = await users.insert(testUser)
       request
@@ -28,6 +38,7 @@ describe('User API', () => {
         .expect(/Marcus/)
         .expect(/Bandung, Indonesia/)
         .expect(200)
+        .end(throwIfError)
     })
   })
 
@@ -39,10 +50,7 @@ describe('User API', () => {
         .send(testUser)
         .expect('location', /^\/[0-9a-fA-F]{24}$/) // Mongo Object Id /234234523562512512
         .expect(201)
-        .expect(async () => {
-          const userFromDb = await users.findOne({ name: testUser.name })
-          userFromDb.name.should.equal(testUser.name)
-        })
+        .end(throwIfError)
     })
     it('returns validation error if name is not present', async () => {
       request
@@ -50,6 +58,7 @@ describe('User API', () => {
         .send({ city: 'A city without a user name' })
         .expect('ValidationError', 'Name is required')
         .expect(200)
+        .end(throwIfError)
     })
     it('returns validation error if city is not present', async () => {
       request
@@ -57,8 +66,10 @@ describe('User API', () => {
         .send({ name: 'A name without a city' })
         .expect('ValidationError', 'City is required')
         .expect(200)
+        .end(throwIfError)
     })
   })
+
   describe('PUT to /user', () => {
     it('updates an existing user for complete put data', async () => {
       const user = await users.insert(testUser)
@@ -68,6 +79,7 @@ describe('User API', () => {
         .send({name: 'Marcus v2', City: 'Bandung Updated'})
         .expect('location', userUrl)
         .expect(204)
+        .end(throwIfError)
     })
   })
 })
