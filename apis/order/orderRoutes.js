@@ -1,52 +1,48 @@
-var parse = require("co-body");
+const parse = require('co-body')
+const monk = require('monk')
+const db = monk('localhost/ordersAPI')
+const orders = db.get('orders')
 
-var monk = require("monk");
-var wrap = require("co-monk");
-var db = monk("localhost/ordersAPI");
-var orders = wrap(db.get("orders"));
-module.exports.orders = orders;
+const add = async (ctx) => {
+  const postedOrder = await parse(ctx)
 
-module.exports.add = function * () {
-	var postedOrder = yield parse(this);
+  if (!exists(postedOrder.userId)) {
+    ctx.set('ValidationError', 'User reference is required')
+    ctx.status = 200
+    return
+  }
 
-	if(!exists(postedOrder.userId)){
-		this.set('ValidationError', 'User reference is required');
-		this.status = 200;
-		return;
-	};
-
-	var insertedOrder = yield orders.insert(postedOrder);
-
-	this.set("location", this.originalUrl + "/" + insertedOrder.orderId);
-	this.status = 201;
-};
-
-module.exports.get = function *(id) {
-	var order = yield orders.findOne({orderId : id});
-	this.body = order;
-	this.status = 200;
-};
-
-module.exports.getForUser = function *(userId) {
-	var order = yield orders.findOne({userId : userId});
-	this.body = order;
-	this.status = 200;
-};
-
-module.exports.update = function * (orderId) {
-	var orderFromRequest = yield parse(this);
-
-	yield orders.update({ orderId : orderId }, orderFromRequest);
-
-	var prefixOfUrl = this.originalUrl.replace(orderId, "");
-	this.set("location", prefixOfUrl + orderId);
-	this.status = 204;
+  const insertedOrder = await orders.insert(postedOrder)
+  ctx.set('location', ctx.originalUrl + '/' + insertedOrder.orderId)
+  ctx.status = 201
 }
 
-var exists = function (value) {
-	if(value === undefined)
-		return false;
-	if(value === null)
-		return false;
-	return true;
-};
+const get = async (ctx, id) => {
+  const order = await orders.findOne({orderId: id})
+  ctx.body = order
+  ctx.status = 200
+}
+
+const getForUser = async (ctx, userId) => {
+  const order = await orders.findOne({userId: userId})
+  ctx.body = order
+  ctx.status = 200
+}
+
+const update = async (ctx, orderId) => {
+  const orderFromRequest = await parse(ctx)
+  await orders.findOneAndUpdate({ orderId: orderId }, orderFromRequest)
+  const prefixOfUrl = ctx.originalUrl.replace(orderId, '')
+  ctx.set('location', prefixOfUrl + orderId)
+  ctx.status = 204
+}
+
+const exists = (value) => (value !== undefined) && (value !== null)
+
+module.exports = {
+  orders,
+  add,
+  get,
+  getForUser,
+  update
+}
