@@ -5,8 +5,10 @@
   "description": "The Address API",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony index.js standalone",
-    "test": "./node_modules/mocha/bin/mocha --harmony-generators -u bdd -R dot"
+    "start": "node index.js",
+    "test": "mocha -w -u bdd -R dot",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "author": "Marcus Hammarberg",
   "license": "BSD-2-Clause",
@@ -16,12 +18,13 @@
     "koa": "^0.20.0",
     "koa-route": "^2.4.1",
     "mongodb": "^2.0.31",
-    "monk": "^1.0.1"
+    "monk": "^6.0.6"
   },
   "devDependencies": {
     "co": "^4.5.4",
     "mocha": "^2.2.4",
     "should": "^6.0.1",
+    "standard": "^11.0.1",
     "supertest": "^0.15.0"
   }
 }
