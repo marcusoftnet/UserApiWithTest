@@ -1,5 +1,5 @@
-const koa = require('koa')
-const app = koa()
+const Koa = require('koa')
+const app = new Koa()
 const routes = require('koa-route')
 const addressRoutes = require('./addressRoutes.js')
 
@@ -16,6 +16,5 @@ if (process.env.standalone) {
 console.log('The app is listening. Port 3000')
 
 module.exports = {
-  app,
-  addresses : addressRoutes.addresses
+  app
 }

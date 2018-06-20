@@ -1,50 +1,45 @@
 const parse = require('co-body')
 const monk = require('monk')
-const wrap = require('co-monk')
 const db = monk('localhost/addressApi')
-const addresses = wrap(db.get('addresses'))
+const addresses = db.get('addresses')
 
-function * add () {
-  var postedAddress = yield parse(this)
+const add = async (ctx) => {
+  var postedAddress = await parse(ctx)
 
   if (!exists(postedAddress.userId)) {
-    this.set('ValidationError', 'User ID is required')
-    this.status = 200
+    ctx.set('ValidationError', 'User ID is required')
+    ctx.status = 200
     return
-  };
+  }
 
-  var insertedAddress = yield addresses.insert(postedAddress)
+  const insertedAddress = await addresses.insert(postedAddress)
 
-  this.set('location', this.originalUrl + '/' + insertedAddress._id)
-  this.status = 201
-};
-
-function * get (id) {
-  var address = yield addresses.findOne({_id:id})
-  this.body = address
-  this.status = 200
-};
-
-function * update (id) {
-  var postedAddress = yield parse(this)
-
-  yield addresses.findOneAndUpdate({_id:id}, postedAddress)
-
-  var prefixOfUrl = this.originalUrl.replace(id, '')
-  this.set('location', prefixOfUrl + id)
-  this.status = 204
-};
-
-function * remove (id) {
-  yield addresses.remove({_id: id})
-  this.status = 200
-};
-
-var exists = function (value) {
-  if (value === undefined) { return false }
-  if (value === null) { return false }
-  return true
+  ctx.set('location', ctx.originalUrl + insertedAddress._id)
+  ctx.status = 201
 }
+
+const get = async (ctx, id) => {
+  const address = await addresses.findOne({_id: id})
+  ctx.body = address
+  ctx.status = 200
+}
+
+const update = async (ctx, id) => {
+  var postedAddress = await parse(ctx)
+
+  await addresses.findOneAndUpdate({_id: id}, postedAddress)
+
+  var prefixOfUrl = ctx.originalUrl.replace(id, '')
+  ctx.set('location', prefixOfUrl + id)
+  ctx.status = 204
+}
+
+const remove = async (ctx, id) => {
+  await addresses.remove({_id: id})
+  ctx.status = 200
+}
+
+const exists = (value) => (value !== undefined) && (value !== null)
 
 module.exports = {
   add,
