@@ -13,8 +13,8 @@ const add = async (ctx) => {
   }
 
   const insertedAddress = await addresses.insert(postedAddress)
-
-  ctx.set('location', ctx.originalUrl + insertedAddress._id)
+  const url = `${ctx.originalUrl}/${insertedAddress._id}`.replace('//', '/')
+  ctx.set('location', url)
   ctx.status = 201
 }
 
