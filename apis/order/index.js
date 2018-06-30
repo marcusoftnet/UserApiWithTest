@@ -9,6 +9,12 @@ app.use(routes.put('/:id', orderRoutes.update))
 app.use(routes.del('/:id', orderRoutes.remove))
 app.use(routes.get('/user/:userId', orderRoutes.getForUser))
 
-console.log('The app is listening. Port 3000')
+// Fire it up
+if (!module.parent) {
+  app.listen(3000)
+  console.log('The Order API is listening. Port 3000')
+}
 
-module.exports = app
+module.exports = {
+  app
+}

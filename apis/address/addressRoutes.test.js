@@ -32,11 +32,6 @@ describe('Address API', () => {
       .send(testAddress)
       .expect('location', /^\/[0-9a-fA-F]{24}$/) // Mongo Object Id /address/234234523562512512
       .expect(201)
-      .expect(async () => {
-        const addressesFromDb = await addresses.find({})
-        addressesFromDb.length.should.equal(1)
-        addressesFromDb[0].city.should.equal(testAddress.city)
-      })
       .end(throwIfError)
   })
 

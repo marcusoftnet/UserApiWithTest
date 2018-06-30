@@ -5,7 +5,7 @@
   "description": "The order API",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony app.js",
+    "start": "node index.js",
     "test": "mocha -w -u bdd -R spec ./*.test.js",
     "lint": "standard",
     "lint:fix": "standard --fix"

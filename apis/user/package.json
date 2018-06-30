@@ -5,7 +5,7 @@
   "description": "The User API",
   "main": "app.js",
   "scripts": {
-    "start": "node --harmony app.js",
+    "start": "node app.js",
     "test": "mocha -w -u bdd -R spec ./*.test.js",
     "lint": "standard",
     "lint:fix": "standard --fix"

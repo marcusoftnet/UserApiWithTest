@@ -1,12 +1,12 @@
 {
-  "name": "AddressAPI",
+  "name": "addressapi",
   "version": "1.0.1",
   "repository": "https://github.com/marcusoftnet/UserApiWithTest",
   "description": "The Address API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha -w -u bdd -R dot ./*.test.js",
+    "test": "mocha -w -u bdd -R spec ./*.test.js",
     "lint": "standard",
     "lint:fix": "standard --fix"
   },

@@ -9,11 +9,10 @@ app.use(routes.get('/:id', addressRoutes.get))
 app.use(routes.put('/:id', addressRoutes.update))
 app.use(routes.del('/:id', addressRoutes.remove))
 
-// Fire it up
-if (process.env.standalone) {
+if (!module.parent) {
   app.listen(3000)
+  console.log('The Address API is listening. Port 3000')
 }
-console.log('The app is listening. Port 3000')
 
 module.exports = {
   app

@@ -18,7 +18,7 @@ const add = async (ctx) => {
   }
 
   const insertedUser = await users.insert(postedUser)
-  ctx.set('location', ctx.originalUrl + insertedUser._id)
+  ctx.set('location', ctx.originalUrl + '/' + insertedUser._id)
   ctx.status = 201
 }
 

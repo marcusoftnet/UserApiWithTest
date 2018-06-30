@@ -1,6 +1,6 @@
 /* global describe, before, beforeEach, after, it */
 const should = require('should')
-const app = require('./index.js')
+const app = require('./index.js').app
 const orders = require('./orderRoutes.js').orders
 const supertest = require('supertest')
 
@@ -28,7 +28,7 @@ describe('Order API', () => {
     request
       .post('/')
       .send(testOrder)
-      .expect('location', /^\/[0-9a-fA-F]{24}$/) // /order/234234523562512512
+      .expect('location', /^\/[0-9a-fA-F]{24}$/) //
       .expect(201)
       .expect(async () => {
         const orderFromDb = await orders.findOne({ orderId: testOrder.orderId })
