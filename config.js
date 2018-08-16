@@ -1,9 +1,9 @@
-var adminUser = {
+const adminUser = {
   name: process.env.BASIC_USER || 'ypkbk',
   pass: process.env.BASIC_PASS || 'ypkbk'
 }
 
-var config = {
+const config = {
   local: {
     mode: 'local',
     port: 3000,
@@ -21,6 +21,6 @@ var config = {
   }
 }
 
-module.exports = function (mode) {
+module.exports = (mode) => {
   return config[mode || process.argv[2] || 'local'] || config.local
 }

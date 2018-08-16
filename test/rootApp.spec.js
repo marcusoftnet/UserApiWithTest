@@ -44,28 +44,4 @@ describe('Our application', () => {
       .expect('location', /^\/address\/[0-9a-fA-F]{24}$/)
       .end(throwIfError)
   })
-
-  it('and an order api, but that requires login', async () => {
-    const testOrder = {
-      orderId: '123456789',
-      ordered: new Date('2015-01-01'),
-      userId: '987654321'
-    }
-
-    request
-      .post('/orders')
-      .auth(config.adminUser.name, config.adminUser.pass)
-      .send(testOrder)
-      .expect('location', /^\/orders\/[0-9]{9}$/)
-      .expect(201)
-      .end(throwIfError)
-  })
-
-  it('exactly - the order API require login. Not logging in will give you access', async () => {
-    request
-      .post('/orders')
-      .send({ content: 'does not matter' })
-      .expect(401)
-      .end(throwIfError)
-  })
 })

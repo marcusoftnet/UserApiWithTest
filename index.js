@@ -2,8 +2,6 @@ const Koa = require('koa')
 const app = new Koa()
 const mount = require('koa-mount')
 const config = require('./config.js')()
-const auth = require('koa-basic-auth')
-const userAuth = require('./authentication.js')
 
 // The root application
 const rootApp = new Koa()
@@ -20,12 +18,8 @@ const orderApi = require('OrderAPI').app
 // Mounting
 app.use(mount('/users', userApi))
 app.use(mount('/address', addressApi))
-app.use(mount('/', rootApp))
-
-// middleware configuration
-app.use(userAuth.reqBasic)
-app.use(mount('/orders', auth(config.adminUser)))
 app.use(mount('/orders', orderApi))
+app.use(mount('/', rootApp))
 
 if (!module.parent) {
   app.listen(config.port)

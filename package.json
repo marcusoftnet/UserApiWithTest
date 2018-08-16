@@ -28,11 +28,10 @@
   "homepage": "https://github.com/marcusoftnet/UserApiWithTest",
   "dependencies": {
     "addressapi": "file:./apis/address",
-    "orderapi": "file:./apis/order",
-    "userapi": "file:./apis/user",
     "koa": "^2.5.1",
-    "koa-basic-auth": "^3.0.0",
-    "koa-mount": "^3.0.0"
+    "koa-mount": "^3.0.0",
+    "orderapi": "file:./apis/order",
+    "userapi": "file:./apis/user"
   },
   "devDependencies": {
     "mocha": "^5.2.0",
